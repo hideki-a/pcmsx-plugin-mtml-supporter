@@ -6,7 +6,39 @@
   main pre { margin-bottom: 0; white-space: pre-wrap; }
   main pre code { color: #e83e8c; }
   .mtmlsupporter-tag { display: flex; align-items: center; }
-  .mtmlsupporter-tag button { margin-right: 5px; padding: 0; }
+  .mtmlsupporter-tag button {
+    position: relative;
+    appearance: none;
+    margin-right: 10px;
+    padding: 0;
+    border-width: 0;
+    background: none;
+    line-height: 1;
+  }
+  .mtmlsupporter-tag button::after {
+    position: absolute;
+    top: -0.35em;
+    left: -0.42em;
+    z-index: 1;
+    display: inline-block;
+    content: "";
+    width: 1.75em;
+    height: 1.75em;
+    border-radius: 50%;
+    background: transparent;
+    transform: scale(0);
+    transition-duration: .15s;
+    transition-property: transform;
+  }
+  .mtmlsupporter-tag button:hover::after,
+  .mtmlsupporter-tag button:focus::after {
+    background-color: #cee4eb;
+    transform: scale(1);
+  }
+  .mtmlsupporter-tag button i {
+    position: relative;
+    z-index: 2;
+  }
 </style>
 <script>
   (function () {
