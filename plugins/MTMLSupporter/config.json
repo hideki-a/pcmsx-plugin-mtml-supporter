@@ -6,7 +6,7 @@
     "author"      : "LAB Inc.",
     "author_link" : "https://lab-inc.jp/",
     "committer"   : "Hideki Abe",
-    "description" : "モデル毎にテンプレートタグを一覧表示します。",
+    "description" : "Lists template tags for each model.",
     "menus": {
         "list_tags": {
             "display_system" : 1,
@@ -14,13 +14,15 @@
             "component"  : "MTMLSupporter",
             "mode"       : "list_tags",
             "label"      : "Tag List",
-            "order"      : 100
+            "permission" : "can_create_template",
+            "order"      : 1500
         }
     },
     "methods": {
         "list_tags": {
             "component"  : "MTMLSupporter",
-            "method"     : "listTags"
+            "method"     : "listTags",
+            "permission" : "can_create_template"
         }
     }
 }
