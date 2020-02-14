@@ -29,9 +29,14 @@
     <div class="col-sm-3">
       <select name="dispmodel" id="model" class="form-control">
         <option value="">選択してください</option>
-        <mt:objectloop model="table" template_tags="1" sort_by="order">
+<mt:setvar name="ignore_models" value="table,template,question" />
+<mt:var name="ignore_models" split="," setvar="ignore_models" />
+<mt:objectloop model="table" template_tags="1" sort_by="order">
+  <mt:ifinarray name="ignore_models" value="$name">
+  <mt:else>
           <option value="<mt:var name="name" escape />"<mt:if name="name" eq="$dispmodel"> selected</mt:if>><mt:var name="label" trans="1" escape /></option>
-        </mt:objectloop>
+  </mt:ifinarray>
+</mt:objectloop>
       </select>
     </div>
     <div class="col-sm-2">
