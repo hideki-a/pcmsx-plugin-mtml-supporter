@@ -1,0 +1,122 @@
+<mt:var name="request.dispmodel" setvar="dispmodel" />
+<mt:unless name="dispmodel"><mt:setvar name="dispmodel" value="entry" /></mt:unless>
+<mt:setvarblock name="html_head" append="1">
+<style>
+  form { margin-bottom: 2rem; }
+  pre { margin-bottom: 0; white-space: pre-wrap; }
+  pre code { color: #e83e8c; }
+</style>
+</mt:setvarblock>
+<mt:include file="include/header.tmpl">
+
+<form action="<mt:var name="script_uri" escape />" method="get">
+  <input type="hidden" name="__mode" value="list_tags">
+  <div class="form-group row">
+    <label for="model" class="col-sm-1 col-form-label">モデル</label>
+    <div class="col-sm-3">
+      <select name="dispmodel" id="model" class="form-control">
+        <option value="">選択してください</option>
+        <mt:objectloop model="table" template_tags="1" sort_by="order">
+          <option value="<mt:var name="name" escape />"<mt:if name="name" eq="$dispmodel"> selected</mt:if>><mt:var name="label" trans="1" escape /></option>
+        </mt:objectloop>
+      </select>
+    </div>
+    <div class="col-sm-2">
+      <button type="submit" class="btn btn-primary">表示</button>
+    </div>
+  </div>
+</form>
+
+<h2><mt:var name="dispmodel" trans="1" />モデル</h2>
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>ラベル</th>
+      <th class="text-nowrap">カラムタイプ</th>
+      <th class="text-nowrap">編集タイプ</th>
+      <th>カラム名</th>
+      <th>テンプレートタグ</th>
+      <th>条件分岐用タグ名</th>
+      <th class="text-nowrap">リレーション先</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ブロック</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+<mt:objectloop model="table" name="$dispmodel">
+  <mt:var name="name" replace="'_',''" setvar="model_name_for_tag" />
+  <mt:var name="plural" lower_case regex_replace="'/[^a-z0-9]/',''" setvar="block_tag" />
+        <pre><code>&lt;mt:<mt:var name="block_tag" escape />&gt;
+&lt;/mt:<mt:var name="block_tag" escape />&gt;</code></pre>
+</mt:objectloop>        
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>パーマリンク</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape />permalink escape /></code></pre>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+<mt:objectcols model="$dispmodel">
+    <tr>
+      <th><mt:var name="label" trans="1" escape /></th>
+      <td><mt:var name="type" escape /></td>
+      <td><mt:var name="edit" regex_replace="'/^(.*?):.*/','\$1'" escape /></td>
+      <td><mt:var name="name" escape /></td>
+      <td>
+<mt:var name="name" lower_case regex_replace="'/[^a-z0-9]/',''" setvar="column_name_for_tag" />
+<mt:if name="edit" eq="selection">
+  <mt:if name="disp_edit" eq="checkbox">
+        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> split="," setvar="somearray" /&gt;
+&lt;mt:loop name="somearray"&gt;
+  &lt;mt:var name="__value__" escape /&gt;
+&lt;/mt:loop&gt;
+</code></pre>
+  </mt:if>
+<mt:elseif name="edit" eq="blob">
+        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />url escape /&gt;</code></pre>
+<mt:elseif name="type" eq="datetime">
+        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> format_ts="Y年m月d日" escape /&gt;</code></pre>
+<mt:elseif name="type" eq="relation">
+        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />&gt;&lt;mt:**** /&gt;&lt;/mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />&gt;</code></pre>
+<mt:elseif name="edit" eq="text">
+  <mt:if name="edit" eq="richtext">
+        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> convert_breaks="auto" /&gt;</code></pre>
+  <mt:elseif name="edit" eq="textarea">
+        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> escape nl2br="1" /&gt;</code></pre>
+  <mt:else>
+        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> escape /&gt;</code></pre>
+  </mt:if>
+<mt:elseif name="type" eq="int">
+  <mt:if name="edit" match=":">
+        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />context&gt;&lt;mt:**** /&gt;&lt;/mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />context&gt;</code></pre>
+  <mt:else>
+        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> escape /&gt;</code></pre>
+  </mt:if>
+<mt:else>
+        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> escape /&gt;</code></pre>
+</mt:if>
+      </td>
+      <td><mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /></td>
+      <td>
+<mt:if name="edit" match="relation">
+  <mt:var name="edit" regex_replace="'/^relation:(.*?):.*/','\$1'" setvar="relation_model" />
+        <a href="<mt:var name="script_uri" escape />?__mode=list_tags&amp;dispmodel=<mt:var name="relation_model" escape />"><mt:var name="relation_model" /></a>
+</mt:if>
+      </td>
+    </tr>
+</mt:objectcols>
+  </tbody>
+</table>
+
+<mt:include file="include/footer.tmpl">

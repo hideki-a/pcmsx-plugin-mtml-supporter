@@ -1,0 +1,26 @@
+{
+    "label"       : "MTMLSupporter",
+    "id"          : "mtmlsupporter",
+    "component"   : "MTMLSupporter",
+    "version"     : "1.0.0",
+    "author"      : "LAB Inc.",
+    "author_link" : "https://lab-inc.jp/",
+    "committer"   : "Hideki Abe",
+    "description" : "モデル毎にテンプレートタグを一覧表示します。",
+    "menus": {
+        "list_tags": {
+            "display_system" : 1,
+            "display_space" : 0,
+            "component"  : "MTMLSupporter",
+            "mode"       : "list_tags",
+            "label"      : "Tag List",
+            "order"      : 100
+        }
+    },
+    "methods": {
+        "list_tags": {
+            "component"  : "MTMLSupporter",
+            "method"     : "listTags"
+        }
+    }
+}
