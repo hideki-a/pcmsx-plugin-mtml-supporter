@@ -134,7 +134,9 @@
       <td>
 <mt:if name="edit" match="relation">
   <mt:var name="edit" regex_replace="'/^relation:(.*?):.*/','\$1'" setvar="relation_model" />
+  <mt:if name="relation_model" ne="__any__">
         <a href="<mt:var name="script_uri" escape />?__mode=list_tags&amp;dispmodel=<mt:var name="relation_model" escape />"><mt:var name="relation_model" /></a>
+  </mt:if>
 </mt:if>
       </td>
     </tr>
