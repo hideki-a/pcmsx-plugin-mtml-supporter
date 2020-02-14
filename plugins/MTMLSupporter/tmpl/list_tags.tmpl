@@ -5,7 +5,20 @@
   main form { margin-bottom: 2rem; }
   main pre { margin-bottom: 0; white-space: pre-wrap; }
   main pre code { color: #e83e8c; }
+  .mtmlsupporter-tag { display: flex; align-items: center; }
+  .mtmlsupporter-tag button { margin-right: 5px; padding: 0; }
 </style>
+<script>
+  (function () {
+    window.addEventListener('load', function () {
+      new Clipboard('.js-clipboard', {
+        target: function (trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+    });
+  }());
+</script>
 </mt:setvarblock>
 <mt:include file="include/header.tmpl">
 
@@ -26,6 +39,8 @@
     </div>
   </div>
 </form>
+
+<mt:setvarblock name="icon_clipboard_html"><button type="button" class="js-clipboard"  aria-label="クリップボードにコピー"><i class="fa fa-clipboard" aria-hidden="true"></i></button></mt:setvarblock>
 
 <h2><mt:var name="dispmodel" trans="1" />モデル</h2>
 <table class="table table-bordered table-striped">
@@ -50,8 +65,7 @@
 <mt:objectloop model="table" name="$dispmodel">
   <mt:var name="name" replace="'_',''" setvar="model_name_for_tag" />
   <mt:var name="plural" lower_case regex_replace="'/[^a-z0-9]/',''" setvar="block_tag" />
-        <pre><code>&lt;mt:<mt:var name="block_tag" escape />&gt;
-&lt;/mt:<mt:var name="block_tag" escape />&gt;</code></pre>
+        <div class="mtmlsupporter-tag"><mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="block_tag" escape />&gt;&lt;/mt:<mt:var name="block_tag" escape />&gt;</code></pre></div>
 </mt:objectloop>        
       <td></td>
       <td></td>
@@ -62,7 +76,7 @@
       <td></td>
       <td></td>
       <td>
-        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape />permalink escape /></code></pre>
+        <div class="mtmlsupporter-tag"><mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape />permalink escape /></code></pre></div>
       </td>
       <td></td>
       <td></td>
@@ -74,38 +88,40 @@
       <td><mt:var name="edit" regex_replace="'/^(.*?):.*/','\$1'" escape /></td>
       <td><mt:var name="name" escape /></td>
       <td>
+        <div class="mtmlsupporter-tag">
 <mt:var name="name" lower_case regex_replace="'/[^a-z0-9]/',''" setvar="column_name_for_tag" />
 <mt:if name="edit" eq="selection">
   <mt:if name="disp_edit" eq="checkbox">
-        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> split="," setvar="somearray" /&gt;
+          <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> split="," setvar="somearray" /&gt;
 &lt;mt:loop name="somearray"&gt;
   &lt;mt:var name="__value__" escape /&gt;
 &lt;/mt:loop&gt;
 </code></pre>
   </mt:if>
 <mt:elseif name="edit" eq="blob">
-        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />url escape /&gt;</code></pre>
+          <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />url escape /&gt;</code></pre>
 <mt:elseif name="type" eq="datetime">
-        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> format_ts="Y年m月d日" escape /&gt;</code></pre>
+          <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> format_ts="Y年m月d日" escape /&gt;</code></pre>
 <mt:elseif name="type" eq="relation">
-        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />&gt;&lt;mt:**** /&gt;&lt;/mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />&gt;</code></pre>
+          <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />&gt;&lt;mt:**** /&gt;&lt;/mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />&gt;</code></pre>
 <mt:elseif name="edit" eq="text">
   <mt:if name="edit" eq="richtext">
-        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> convert_breaks="auto" /&gt;</code></pre>
+          <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> convert_breaks="auto" /&gt;</code></pre>
   <mt:elseif name="edit" eq="textarea">
-        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> escape nl2br="1" /&gt;</code></pre>
+          <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> escape nl2br="1" /&gt;</code></pre>
   <mt:else>
-        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> escape /&gt;</code></pre>
+          <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> escape /&gt;</code></pre>
   </mt:if>
 <mt:elseif name="type" eq="int">
   <mt:if name="edit" match=":">
-        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />context&gt;&lt;mt:**** /&gt;&lt;/mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />context&gt;</code></pre>
+          <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />context&gt;&lt;mt:**** /&gt;&lt;/mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />context&gt;</code></pre>
   <mt:else>
-        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> escape /&gt;</code></pre>
+          <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> escape /&gt;</code></pre>
   </mt:if>
 <mt:else>
-        <pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> escape /&gt;</code></pre>
+          <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> escape /&gt;</code></pre>
 </mt:if>
+        </div>
       </td>
       <td><mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /></td>
       <td>
