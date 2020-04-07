@@ -137,7 +137,7 @@
   <mt:else>
           <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> escape /&gt;</code></pre>
   </mt:if>
-<mt:elseif name="edit" eq="blob">
+<mt:elseif name="edit" eq="file">
           <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />url escape /&gt;</code></pre>
 <mt:elseif name="type" eq="datetime">
           <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> format_ts="Y年m月d日" escape /&gt;</code></pre>
@@ -147,10 +147,14 @@
   <mt:if name="edit" eq="richtext">
           <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> convert_breaks="auto" /&gt;</code></pre>
   <mt:elseif name="edit" eq="textarea">
-          <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> escape nl2br="1" /&gt;</code></pre>
+          <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> nl2br="1" /&gt;</code></pre>
   <mt:else>
           <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> escape /&gt;</code></pre>
   </mt:if>
+<mt:elseif name="edit" eq="richtext">
+        <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> convert_breaks="auto" /&gt;</code></pre>
+<mt:elseif name="edit" eq="textarea">
+        <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape /> nl2br="1" /&gt;</code></pre>
 <mt:elseif name="type" eq="int">
   <mt:if name="edit" match=":">
           <mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />context&gt;&lt;mt:**** /&gt;&lt;/mt:<mt:var name="model_name_for_tag" escape /><mt:var name="column_name_for_tag" escape />context&gt;</code></pre>
