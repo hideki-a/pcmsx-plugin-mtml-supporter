@@ -42,11 +42,18 @@
 </style>
 <script>
   (function () {
-    window.addEventListener('load', function () {
-      new Clipboard('.js-clipboard', {
-        target: function (trigger) {
-          return trigger.nextElementSibling;
-        }
+    window.addEventListener('load', () => {
+      const copyButtons = document.querySelectorAll('.js-clipboard');
+      copyButtons.forEach((button) => {
+        button.addEventListener('click', (e) => {
+          const range = new Range();
+          const code = e.currentTarget.nextElementSibling;
+          navigator.clipboard.writeText(code.textContent);
+          range.setStart(code.childNodes[0], 0);
+          range.setEnd(code.childNodes[0], 1);
+          document.getSelection().removeAllRanges();
+          document.getSelection().addRange(range);
+        });
       });
     });
   }());
@@ -102,8 +109,8 @@
 <mt:objectloop model="table" name="$dispmodel">
   <mt:var name="name" replace="'_',''" setvar="model_name_for_tag" />
   <mt:var name="plural" lower_case regex_replace="'/[^a-z0-9]/',''" setvar="block_tag" />
-        <div class="mtmlsupporter-tag"><mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="block_tag" escape />&gt;&lt;/mt:<mt:var name="block_tag" escape />&gt;</code></pre></div>
-</mt:objectloop>        
+        <div class="mtmlsupporter-tag"><mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="block_tag" escape /> sort_by="published_on" sort_order="descend" cols="指定すれば尚良し"&gt;&lt;/mt:<mt:var name="block_tag" escape />&gt;</code></pre></div>
+</mt:objectloop>
       <td></td>
       <td></td>
     </tr>
@@ -113,7 +120,7 @@
       <td></td>
       <td></td>
       <td>
-        <div class="mtmlsupporter-tag"><mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape />permalink escape /></code></pre></div>
+        <div class="mtmlsupporter-tag"><mt:var name="icon_clipboard_html" /><pre><code>&lt;mt:<mt:var name="model_name_for_tag" escape />permalink relative escape /></code></pre></div>
       </td>
       <td></td>
       <td></td>
